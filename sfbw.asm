@@ -44,10 +44,11 @@ BRA Return              ; branch to Return
 CheckMod3:
 LDA $0DBF               ; load coin count back into A since Mod5 overwrote it
 JSR Mod3                ; jump to Mod3
-BNE Return              ; if A (coin count) mod 3 != 0 branch to Return
+BNE SetSmall            ; if A (coin count) mod 3 != 0 branch to SetSmall
 LDX #$01                ; load value 1 into X
 STX $19                 ; store the value of X (1) into power-up status address to set big
 BRA Return              ; branch to Return
+SetSmall:
 STZ $19                 ; store the value 0 into power-up status address to set small
 Return:
 LDA $0DBF               ; load the coin count back into A, as it was when we inserted our code
