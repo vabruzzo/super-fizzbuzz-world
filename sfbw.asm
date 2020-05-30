@@ -26,15 +26,15 @@ RTL                       ; return to where we hijacked the code
 
 SetBigMario:
 LDX #$01                  ; load 01 into X register
-STX $7E0019               ; store the value of X register (01) into powerup status address
+STX $19               ; store the value of X register (01) into powerup status address
 
 SetCapeMario:
 LDX #$02
-STX $7E0019
+STX $19
 
 SetFireMario:
 LDX #$03
-STX $7E0019
+STX $19
 
 Modulus3:
 SEC
