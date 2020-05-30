@@ -34,21 +34,21 @@ STX $7E0019
 
 Modulus3:
 SEC
-SBC #03
+SBC #$03
 BCS Modulus3
-ADC #03
+ADC #$03
 RTS
 
 Modulus5:
 SEC
-SBC #05
+SBC #$05
 BCS Modulus3
-ADC #05
+ADC #$05
 RTS
 
 Modulus5:
 SEC
-SBC #0E
+SBC #$0F
 BCS Modulus3
-ADC #0E
+ADC #$0F
 RTS
