@@ -3,26 +3,28 @@
 ; $7E0019 - player powerup status, #$00 = small, #$01 = big, #$02 = cape, #$03 = fire
 ; $7E0DBF - current player coin count
 
-ORG $000000               ; address to insert code, coin counter
+ORG $008F25               ; address to insert code, increase coins by 1
 autoclean JSL FizzBuzz    ; jump to custom code
 
 freecode                  ; tells assembler to place our code in free space in ROM
 
 FizzBuzz:
-LDA $7E0DBF
-JSR Modulus3
-BEQ SetBigMario
-LDA $7E0DBF
-JSR Modulus5
-BEQ SetCapeMario
-LDA $7E0DBF
+INC $7E0DBF               ; we hijacked this code so we do it here, it adds 1 to coin count
+LDA $7E0DBF               ; load coin count into A
+JSR Modulus3              ; jump to Modulus3 subroutine down below
+BEQ SetBigMario           ; if Modulus3 set A to 0, set status to big
+LDA $7E0DBF               ; load coin count back into A since Modulus3 subroutine overwrote it
+JSR Modulus5              ; jump to Modulus5
+BEQ SetCapeMario          ; if 0, set status to cape
+LDA $7E0DBF               ; load coin count back into A
 JSR Modulus15
 BEQ SetFireMario
-RTL
+LDA $7E0DBF               ; load the coin count back into A since we hijacked this
+RTL                       ; return to where we hijacked the code
 
 SetBigMario:
-LDX #$01
-STX $7E0019
+LDX #$01                  ; load 01 into X register
+STX $7E0019               ; store the value of X register (01) into powerup status address
 
 SetCapeMario:
 LDX #$02
