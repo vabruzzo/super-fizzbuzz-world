@@ -11,30 +11,29 @@ NOP                       ; the code we hijack is 6 bytes, the JSL we inject is 
 freecode                  ; tells assembler to place our code in free space in ROM
 
 FizzBuzz:
-INC $7E0DBF               ; we hijacked this code so we do it here, it adds 1 to coin count
+INC $0DBF               ; we hijacked this code so we do it here, it adds 1 to coin count
 LDA $7E0DBF               ; load coin count into A
+LDX #$00                  ; load 01 into X register
+STX $19
 JSR Modulus3              ; jump to Modulus3 subroutine down below
-BEQ SetBigMario           ; if Modulus3 set A to 0, set status to big
+BNE CheckModulus5           ; if Modulus3 set A to 0, set status to big
+LDX #$01                  ; load 01 into X register
+STX $19                   ; store the value of X register (01) into powerup status address
+CheckModulus5:
 LDA $7E0DBF               ; load coin count back into A since Modulus3 subroutine overwrote it
 JSR Modulus5              ; jump to Modulus5
-BEQ SetCapeMario          ; if 0, set status to cape
-LDA $7E0DBF               ; load coin count back into A
-JSR Modulus15
-BEQ SetFireMario
-LDA $7E0DBF               ; load the coin count back into A since we hijacked this
-RTL                       ; return to where we hijacked the code
-
-SetBigMario:
-LDX #$01                  ; load 01 into X register
-STX $19               ; store the value of X register (01) into powerup status address
-
-SetCapeMario:
+BNE CheckModulus15          ; if 0, set status to cape
 LDX #$02
 STX $19
-
-SetFireMario:
+CheckModulus15:
+LDA $7E0DBF               ; load coin count back into A
+JSR Modulus15
+BNE Return
 LDX #$03
 STX $19
+Return:
+LDA $7E0DBF               ; load the coin count back into A since we hijacked this
+RTL                       ; return to where we hijacked the code
 
 Modulus3:
 SEC
