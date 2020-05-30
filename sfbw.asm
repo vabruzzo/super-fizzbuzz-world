@@ -46,13 +46,13 @@ RTS
 Modulus5:
 SEC
 SBC #$05
-BCS Modulus3
+BCS Modulus5
 ADC #$05
 RTS
 
-Modulus5:
+Modulus15:
 SEC
 SBC #$0F
-BCS Modulus3
+BCS Modulus15
 ADC #$0F
 RTS
