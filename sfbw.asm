@@ -3,8 +3,10 @@
 ; $7E0019 - player powerup status, #$00 = small, #$01 = big, #$02 = cape, #$03 = fire
 ; $7E0DBF - current player coin count
 
-ORG $008F25               ; address to insert code, increase coins by 1
+ORG $008F25               ; SWM RAM address to insert our code (increase coins by 1 subroutine)
 autoclean JSL FizzBuzz    ; jump to custom code
+NOP                       ; no-ops to take up some empty space caused by our hijack
+NOP                       ; the code we hijack is 6 bytes, the JSL we inject is 4, so we add 2 bytes
 
 freecode                  ; tells assembler to place our code in free space in ROM
 
