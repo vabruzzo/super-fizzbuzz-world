@@ -33,21 +33,21 @@ JSR Mod15               ; jump to Mod15
 BNE CheckMod5           ; if A (coin count) mod 15 != 0 branch to Mod5
 LDX #$03                ; load value 3 into X
 STX $19                 ; store the value of X (3) into power-up status address to set fire
-JSR Return              ; jump to Return
+BRA Return              ; branch to Return
 CheckMod5:
 LDA $0DBF               ; load coin count back into A since Mod15 overwrote it
 JSR Mod5                ; jump to Mod5
 BNE CheckMod3           ; if A (coin count) mod 5 != 0 branch to Mod3
 LDX #$02                ; load value 2 into X
 STX $19                 ; store the value of X (2) into power-up status address to set cape
-JSR Return              ; jump to Return
+BRA Return              ; branch to Return
 CheckMod3:
 LDA $0DBF               ; load coin count back into A since Mod5 overwrote it
 JSR Mod3                ; jump to Mod3
 BNE Return              ; if A (coin count) mod 3 != 0 branch to Return
 LDX #$01                ; load value 1 into X
 STX $19                 ; store the value of X (1) into power-up status address to set big
-JSR Return              ; jump to Return
+BRA Return              ; branch to Return
 STZ $19                 ; store the value 0 into power-up status address to set small
 Return:
 LDA $0DBF               ; load the coin count back into A, as it was when we inserted our code
@@ -55,9 +55,9 @@ RTL                     ; return to where we inserted our initial Jump to FizzBu
 
 Mod15:                  ; loops until A - 15 < 0 and carry flag is cleared
 SEC                     ; set the carry flag
-SBC #$0E                ; subtract 15 from A, initially the coin count
+SBC #$0F                ; subtract 15 from A, initially the coin count
 BCS Mod15               ; if carry flag is set, go back to Mod15, otherwise proceed
-ADC #$0E                ; add 15 back to A
+ADC #$0F                ; add 15 back to A
 RTS                     ; return to where we jumped from
 
 Mod5:
