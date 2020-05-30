@@ -51,7 +51,7 @@ JSR Return              ; jump to Return
 STZ $19                 ; store the value 0 into power-up status address to set small
 Return:
 LDA $0DBF               ; load the coin count back into A, as it was when we inserted our code
-RTL                     ; return to where we inserted our code
+RTL                     ; return to where we inserted our initial Jump to FizzBuzz
 
 Mod15:                  ; loops until A - 15 < 0 and carry flag is cleared
 SEC                     ; set the carry flag
