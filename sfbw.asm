@@ -17,7 +17,7 @@
 ;             #$03 = fire
 ;           absolute address: $19
 ; $7E0DBF - current player coin count
-;           direct address: $0BDF
+;           direct page address: $0BDF
 
 ORG $008F25             ; the SMW RAM address to insert our code
 autoclean JSL FizzBuzz  ; jump to FizzBuzz
@@ -30,18 +30,18 @@ FizzBuzz:
 INC $0DBF               ; we overwrote this instruction during our insertion so we run it here
 LDA $0DBF               ; load coin count into A
 JSR Mod15               ; jump to Mod15
-BNE CheckMod5           ; if A (coin count) mod 15 != 0 branch to Mod5
+BNE TestMod5            ; if A (coin count) mod 15 != 0 branch to TestMod5
 LDX #$03                ; load value 3 into X
 STX $19                 ; store the value of X (3) into power-up status address to set fire
 BRA Return              ; branch to Return
-CheckMod5:
+TestMod5:
 LDA $0DBF               ; load coin count back into A since Mod15 overwrote it
 JSR Mod5                ; jump to Mod5
-BNE CheckMod3           ; if A (coin count) mod 5 != 0 branch to Mod3
+BNE TestMod3            ; if A (coin count) mod 5 != 0 branch to TestMod3
 LDX #$02                ; load value 2 into X
 STX $19                 ; store the value of X (2) into power-up status address to set cape
 BRA Return              ; branch to Return
-CheckMod3:
+TestMod3:
 LDA $0DBF               ; load coin count back into A since Mod5 overwrote it
 JSR Mod3                ; jump to Mod3
 BNE SetSmall            ; if A (coin count) mod 3 != 0 branch to SetSmall
