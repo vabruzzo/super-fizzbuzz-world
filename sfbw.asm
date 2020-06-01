@@ -34,24 +34,24 @@ LDA !CoinCount          ;load coin count into A
 JSR Mod15               ;jump to Mod15
 BNE TestMod5            ;if A (coin count) mod 15 != 0 branch to TestMod5
 LDX #$03                ;load value 3 into X
-STX PowerUpStatus       ;store the value of X into power-up status address
+STX !PowerUpStatus       ;store the value of X into power-up status address
 BRA Return              ;branch to Return
 TestMod5:
 LDA !CoinCount          ;load coin count back into A since Mod15 overwrote it
 JSR Mod5                ;jump to Mod5
 BNE TestMod3            ;if A (coin count) mod 5 != 0 branch to TestMod3
 LDX #$02                ;load value 2 into X
-STX PowerUpStatus       ;store the value of X into power-up status address
+STX !PowerUpStatus       ;store the value of X into power-up status address
 BRA Return              ;branch to Return
 TestMod3:
 LDA !CoinCount          ;load coin count back into A since Mod5 overwrote it
 JSR Mod3                ;jump to Mod3
 BNE SetSmall            ;if A (coin count) mod 3 != 0 branch to SetSmall
 LDX #$01                ;load value 1 into X
-STX PowerUpStatus       ;store the value of X into power-up status address
+STX !PowerUpStatus       ;store the value of X into power-up status address
 BRA Return              ;branch to Return
 SetSmall:
-STZ PowerUpStatus       ;store the value 0 into power-up status address
+STZ !PowerUpStatus       ;store the value 0 into power-up status address
 Return:
 LDA !CoinCount          ;load the coin count back into A, as it was when we inserted our code
 RTL                     ;return to where we inserted our initial jump to FizzBuzz
