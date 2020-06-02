@@ -34,7 +34,7 @@ LDA !CoinCount          ; load coin count into A
 PHX                     ; push X onto stack so we can retrieve it later
 LDX #$0F                ; load 15 into X
 STX $00                 ; store X in scratch RAM
-JSR Mod                 ; jump to Mod15, compute A mod 15
+JSR Mod                 ; jump to Mod, compute A mod X
 BNE TestMod5            ; if last operation != 0 branch to TestMod5
 LDA #$03                ; load value 3 into A
 STA !PowerUpStatus      ; store the value of A into power-up status address
@@ -43,7 +43,7 @@ TestMod5:
 LDA !CoinCount          ; load coin count back into A
 LDX #$05                ; load 5 into X
 STX $00                 ; store X in scratch RAM
-JSR Mod                 ; jump to Mod5, compute A mod 5
+JSR Mod                 ; jump to Mod, compute A mod X
 BNE TestMod3            ; if last operation != 0 branch to TestMod3
 LDA #$02                ; load value 2 into A
 STA !PowerUpStatus      ; store the value of A into power-up status address
@@ -52,7 +52,7 @@ TestMod3:
 LDA !CoinCount          ; load coin count back into A
 LDX #$03                ; load 3 into X
 STX $00                 ; store X in scratch RAM
-JSR Mod                 ; jump to Mod3, compute A mod 3
+JSR Mod                 ; jump to Mod, compute A mod X
 BNE SetSmall            ; if last operation != 0 branch to SetSmall
 LDA #$01                ; load value 1 into A
 STA !PowerUpStatus      ; store the value of A into power-up status address
