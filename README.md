@@ -2,7 +2,7 @@
 
 ## Resources
 
-### Playing!
+### Playing
 
 [SMW Central: source for all things SMW](https://www.smwcentral.net)
 
